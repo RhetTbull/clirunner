@@ -425,7 +425,7 @@ class CliRunner:
             # set up sys.argv properly with the arguments
             call_args = args or []
             old_argv = sys.argv
-            sys.argv = [prog_name] + call_args
+            sys.argv = [prog_name, *call_args]
             try:
                 return_value = cli()
             except SystemExit as e:
