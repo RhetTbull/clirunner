@@ -182,33 +182,13 @@ def test_stderr():
         print("stdout")
         print("stderr", file=sys.stderr)
 
-    runner = CliRunner(mix_stderr=False)
+    runner = CliRunner()
 
     result = runner.invoke(cli_stderr)
 
-    assert result.output == "stdout\n"
+    assert result.output == "stdout\nstderr\n"
     assert result.stdout == "stdout\n"
     assert result.stderr == "stderr\n"
-
-    runner_mix = CliRunner(mix_stderr=True)
-    result_mix = runner_mix.invoke(cli_stderr)
-
-    assert result_mix.output == "stdout\nstderr\n"
-    assert result_mix.stdout == "stdout\nstderr\n"
-
-    with pytest.raises(ValueError):
-        result_mix.stderr
-
-    def cli_empty_stderr():
-        print("stdout")
-
-    runner = CliRunner(mix_stderr=False)
-
-    result = runner.invoke(cli_empty_stderr)
-
-    assert result.output == "stdout\n"
-    assert result.stdout == "stdout\n"
-    assert result.stderr == ""
 
 
 @pytest.mark.parametrize(
@@ -286,11 +266,11 @@ def test_isolation_stderr_errors():
     raising a UnicodeEncodeError.
     """
 
-    def test_stderr():
+    def cli_stderr():
         sys.stderr.write("\udce2")
 
-    runner = CliRunner(mix_stderr=False)
+    runner = CliRunner()
 
-    result = runner.invoke(test_stderr)
+    result = runner.invoke(cli_stderr)
     assert result.exit_code == 0
     assert result.stderr == "\\udce2"

@@ -1,7 +1,8 @@
 """Test hello.py"""
 
-from clirunner import CliRunner
 from hello import hello
+
+from clirunner import CliRunner
 
 
 def test_hello_world():

@@ -2,7 +2,6 @@
 
 import pathlib
 
-
 DOIT_CONFIG = {"default_tasks": ["cog_docs", "tests", "build"]}
 
 
