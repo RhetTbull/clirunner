@@ -14,6 +14,10 @@ The source code is available on [GitHub](https://github.com/RhetTbull/clirunner)
 
 I write a lot of Python command line tools. I usually reach for Click to build the CLI but sometimes will use argparse or even just manual `sys.argv` parsing for simple scripts or where I do not want to introduce a dependency on Click. Click provides a very useful [CliRunner](https://click.palletsprojects.com/en/8.1.x/testing/) for testing CLIs, but it only works with Click applications. This project is a derivative of Click's CliRunner that works with non-Click scripts. The API is the same as Click's CliRunner, so it should be easy to switch between the two if you later refactor to use Click.
 
+## Supported Platforms
+
+Tested on macOS, Ubuntu Linux, and Windows using "*-latest" GitHub Workflow runners with Python 3.9 - 3.12.
+
 ## Basic Testing
 
 CliRunner can invoke your CLI's main function as a command line script. The CliRunner.invoke() method runs the command line script in isolation and captures the output as both bytes and binary data.
