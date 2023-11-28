@@ -18,6 +18,12 @@ Testing uses pytest.
 
 - `pytest -vv`
 
+## Type Checking
+
+Type checking uses mypy.
+
+- `mypy clirunner`
+
 ## Increment Version
 
 Do not increment the version manually.  Use `bump2version` to increment the version in `clirunner/_version.py`.
