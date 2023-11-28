@@ -655,6 +655,7 @@ def test_hello_world():
 </code></pre>
 <!--[[[end]]]-->
 
+<p>Note that <code>result.output</code> will contain the combined output of <code>stdout</code> and <code>stderr</code>. If you want to capture <code>stdout</code> and <code>stderr</code> separately, use <code>result.stdout</code> and <code>result.stderr</code>.</p>
 <h2 id="file-system-isolation">File System Isolation</h2>
 <p>For basic command line tools with file system operations, the <code>CliRunner.isolated_filesystem()</code> method is useful for setting the current working directory to a new, empty folder.</p>
 <h3 id="catpy">cat.py</h3>
