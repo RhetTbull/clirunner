@@ -73,6 +73,8 @@ def test_hello_world():
 ```
 <!--[[[end]]]-->
 
+Note that `result.output` will contain the combined output of `stdout` and `stderr`. If you want to capture `stdout` and `stderr` separately, use `result.stdout` and `result.stderr`.
+
 ## File System Isolation
 
 For basic command line tools with file system operations, the `CliRunner.isolated_filesystem()` method is useful for setting the current working directory to a new, empty folder.
