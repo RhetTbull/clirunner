@@ -1,3 +1,9 @@
+"""Implementation of the CliRunner class from Click for use with non-Click applications.
+
+This module is a copy of the original Click implementation, with some modifications.
+Original source code: https://github.com/pallets/click/blob/main/src/click/testing.py
+"""
+
 from __future__ import annotations
 
 import collections.abc as cabc
@@ -52,21 +58,8 @@ class EchoingStdin:
         return repr(self._input)
 
 
-@contextlib.contextmanager
-def _pause_echo(stream: EchoingStdin | None) -> cabc.Iterator[None]:
-    if stream is None:
-        yield
-    else:
-        stream._paused = True
-        yield
-        stream._paused = False
-
-
 class BytesIOCopy(io.BytesIO):
-    """Patch ``io.BytesIO`` to let the written stream be copied to another.
-
-    .. versionadded:: 8.2
-    """
+    """Patch ``io.BytesIO`` to let the written stream be copied to another."""
 
     def __init__(self, copy_to: io.BytesIO) -> None:
         super().__init__()
@@ -85,8 +78,6 @@ class StreamMixer:
     """Mixes `<stdout>` and `<stderr>` streams.
 
     The result is available in the ``output`` attribute.
-
-    .. versionadded:: 8.2
     """
 
     def __init__(self) -> None:
@@ -174,12 +165,7 @@ class Result:
 
     @property
     def output(self) -> str:
-        """The terminal output as unicode string, as the user would see it.
-
-        .. versionchanged:: 8.2
-            No longer a proxy for ``self.stdout``. Now has its own independent stream
-            that is mixing `<stdout>` and `<stderr>`, in the order they were written.
-        """
+        """The terminal output as unicode string, as the user would see it."""
         return self.output_bytes.decode(self.runner.charset, "replace").replace(
             "\r\n", "\n"
         )
@@ -193,11 +179,7 @@ class Result:
 
     @property
     def stderr(self) -> str:
-        """The standard error as unicode string.
-
-        .. versionchanged:: 8.2
-            No longer raise an exception, always returns the `<stderr>` string.
-        """
+        """The standard error as unicode string."""
         return self.stderr_bytes.decode(self.runner.charset, "replace").replace(
             "\r\n", "\n"
         )
@@ -208,20 +190,17 @@ class Result:
 
 
 class CliRunner:
-    """The CLI runner provides functionality to invoke a Click command line
-    script for unittesting purposes in a isolated environment.  This only
+    """The CLI runner provides functionality to invoke a command line
+    script for unit testing purposes in a isolated environment.  This only
     works in single-threaded systems without any concurrency as it changes the
     global interpreter state.
 
-    :param charset: the character set for the input and output data.
-    :param env: a dictionary with environment variables for overriding.
-    :param echo_stdin: if this is set to `True`, then reading from `<stdin>` writes
-                       to `<stdout>`.  This is useful for showing examples in
-                       some circumstances.  Note that regular prompts
-                       will automatically echo the input.
-
-    .. versionchanged:: 8.2
-        ``mix_stderr`` parameter has been removed.
+    Args:
+        charset: the character set for the input and output data.
+        env: a dictionary with environment variables for overriding.
+        echo_stdin: if this is set to `True`, then reading from `<stdin>` writes
+            to `<stdout>`.  This is useful for showing examples in
+            some circumstances.
     """
 
     def __init__(
@@ -252,35 +231,20 @@ class CliRunner:
         self,
         input: str | bytes | t.IO[t.Any] | None = None,
         env: cabc.Mapping[str, str | None] | None = None,
-        color: bool = False,
+        # color: bool = False,
     ) -> cabc.Iterator[tuple[io.BytesIO, io.BytesIO, io.BytesIO]]:
         """A context manager that sets up the isolation for invoking of a
         command line tool.  This sets up `<stdin>` with the given input data
         and `os.environ` with the overrides from the given dictionary.
-        This also rebinds some internals in Click to be mocked (like the
-        prompt functionality).
 
-        This is automatically done in the :meth:`invoke` method.
+        This is automatically done in the `invoke` method.
 
-        :param input: the input stream to put into `sys.stdin`.
-        :param env: the environment overrides as dictionary.
-        :param color: whether the output should contain color codes. The
-                      application can still override this explicitly.
-
-        .. versionadded:: 8.2
-            An additional output stream is returned, which is a mix of
-            `<stdout>` and `<stderr>` streams.
-
-        .. versionchanged:: 8.2
-            Always returns the `<stderr>` stream.
-
-        .. versionchanged:: 8.0
-            `<stderr>` is opened with ``errors="backslashreplace"``
-            instead of the default ``"strict"``.
-
-        .. versionchanged:: 4.0
-            Added the ``color`` parameter.
+        Args:
+            input: the input stream to put into `sys.stdin`.
+            env: the environment overrides as dictionary.
         """
+        # TODO: I don't think we need this color parameter as that is Click specific
+
         bytes_input = make_input_stream(input, self.charset)
         echo_input = None
 
@@ -318,17 +282,17 @@ class CliRunner:
             errors="backslashreplace",
         )
 
-        default_color = color
+        # default_color = color
 
-        def should_strip_ansi(
-            stream: t.IO[t.Any] | None = None, color: bool | None = None
-        ) -> bool:
-            if color is None:
-                return not default_color
-            return not color
+        # def should_strip_ansi(
+        #     stream: t.IO[t.Any] | None = None, color: bool | None = None
+        # ) -> bool:
+        #     if color is None:
+        #         return not default_color
+        #     return not color
 
-        old_should_strip_ansi = utils.should_strip_ansi  # type: ignore
-        utils.should_strip_ansi = should_strip_ansi  # type: ignore
+        # old_should_strip_ansi = utils.should_strip_ansi  # type: ignore
+        # utils.should_strip_ansi = should_strip_ansi  # type: ignore
 
         old_env = {}
         try:
@@ -354,7 +318,7 @@ class CliRunner:
             sys.stdout = old_stdout
             sys.stderr = old_stderr
             sys.stdin = old_stdin
-            utils.should_strip_ansi = old_should_strip_ansi  # type: ignore
+            # utils.should_strip_ansi = old_should_strip_ansi  # type: ignore
 
     def invoke(
         self,
@@ -363,53 +327,27 @@ class CliRunner:
         input: str | bytes | t.IO[t.Any] | None = None,
         env: cabc.Mapping[str, str | None] | None = None,
         catch_exceptions: bool = True,
-        color: bool = False,
+        # color: bool = False,
         **extra: t.Any,
     ) -> Result:
         """Invokes a command in an isolated environment.  The arguments are
-        forwarded directly to the command line script, the `extra` keyword
-        arguments are passed to the :meth:`~clickpkg.Command.main` function of
-        the command.
+        forwarded directly to the command line script.
 
-        This returns a :class:`Result` object.
+        Args:
+            cli: the command to invoke
+            args: the arguments to invoke. It may be given as an iterable
+                or a string. When given as string it will be interpreted
+                as a Unix shell command. More details at
+                `shlex.split`.
+            input: the input data for `sys.stdin`.
+            env: the environment overrides.
+            catch_exceptions: Whether to catch any other exceptions than
+                ``SystemExit``.
 
-        :param cli: the command to invoke
-        :param args: the arguments to invoke. It may be given as an iterable
-                     or a string. When given as string it will be interpreted
-                     as a Unix shell command. More details at
-                     :func:`shlex.split`.
-        :param input: the input data for `sys.stdin`.
-        :param env: the environment overrides.
-        :param catch_exceptions: Whether to catch any other exceptions than
-                                 ``SystemExit``.
-        :param extra: the keyword arguments to pass to :meth:`main`.
-        :param color: whether the output should contain color codes. The
-                      application can still override this explicitly.
-
-        .. versionadded:: 8.2
-            The result object has the ``output_bytes`` attribute with
-            the mix of ``stdout_bytes`` and ``stderr_bytes``, as the user would
-            see it in its terminal.
-
-        .. versionchanged:: 8.2
-            The result object always returns the ``stderr_bytes`` stream.
-
-        .. versionchanged:: 8.0
-            The result object has the ``return_value`` attribute with
-            the value returned from the invoked command.
-
-        .. versionchanged:: 4.0
-            Added the ``color`` parameter.
-
-        .. versionchanged:: 3.0
-            Added the ``catch_exceptions`` parameter.
-
-        .. versionchanged:: 3.0
-            The result object has the ``exc_info`` attribute with the
-            traceback if available.
+        Returns: `Result` object with results of the invocation.
         """
         exc_info = None
-        with self.isolation(input=input, env=env, color=color) as outstreams:
+        with self.isolation(input=input, env=env) as outstreams:
             return_value = None
             exception: BaseException | None = None
             exit_code = 0
@@ -479,12 +417,10 @@ class CliRunner:
         that affect the contents of the CWD to prevent them from
         interfering with each other.
 
-        :param temp_dir: Create the temporary directory under this
-            directory. If given, the created directory is not removed
-            when exiting.
-
-        .. versionchanged:: 8.0
-            Added the ``temp_dir`` parameter.
+        Args:
+            temp_dir: Create the temporary directory under this
+                directory. If given, the created directory is not removed
+                when exiting.
         """
         cwd = os.getcwd()
         dt = tempfile.mkdtemp(dir=temp_dir)
