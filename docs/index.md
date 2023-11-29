@@ -18,6 +18,10 @@ I write a lot of Python command line tools. I usually reach for Click to build t
 
 Tested on macOS, Ubuntu Linux, and Windows using "*-latest" GitHub Workflow runners with Python 3.9 - 3.12.
 
+## Documentation
+
+Full documentation is available [here](https://rhettbull.github.io/clirunner/).
+
 ## Basic Testing
 
 CliRunner can invoke your CLI's main function as a command line script. The CliRunner.invoke() method runs the command line script in isolation and captures the output as both bytes and binary data.
