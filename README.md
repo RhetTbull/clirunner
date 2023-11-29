@@ -204,6 +204,134 @@ def test_prompts():
 
 Note that the input will not be echoed to the output stream. This is different from the behavior of the `input()` function, which does echo the input and from click's `prompt()` function, which also echo's the input when under test.
 
+## Environment Variable Isolation
+
+The `CliRunner.invoke()` method can also be used to set environment variables for the command line script. This is useful for testing command line tools that use environment variables for configuration.
+
+### hello_env.py
+
+<!--[[[cog
+cog.out("\n```python\n")
+with open("tests/hello_env.py", "r") as f:
+    cog.out(f.read())
+cog.out("```\n")
+]]]-->
+
+```python
+"""Say hello to the world, shouting if desired."""
+
+import os
+
+
+def hello():
+    """Say hello to the world, shouting if desired."""
+    if os.getenv("SHOUT") == "1":
+        print("HELLO WORLD!")
+    else:
+        print("Hello World!")
+
+
+if __name__ == "__main__":
+    hello()
+```
+<!--[[[end]]]-->
+
+### test_hello_env.py
+
+<!--[[[cog
+cog.out("\n```python\n")
+with open("tests/test_hello_env.py", "r") as f:
+    cog.out(f.read())
+cog.out("```\n")
+]]]-->
+
+```python
+"""Test hello2.py showing how to set environment variables for testing."""
+
+from hello_env import hello
+
+from clirunner import CliRunner
+
+
+def test_hello():
+    """Test hello2.py"""
+    runner = CliRunner()
+    result = runner.invoke(hello)
+    assert result.exit_code == 0
+    assert result.output == "Hello World!\n"
+
+
+def test_hello_shouting():
+    """Test hello2.py"""
+    runner = CliRunner()
+    result = runner.invoke(hello, env={"SHOUT": "1"})
+    assert result.exit_code == 0
+    assert result.output == "HELLO WORLD!\n"
+```
+<!--[[[end]]]-->
+
+## Handling Exceptions
+
+Normally the `CliRunner.invoke()` method will catch exceptions in the CLI under test. If an exception is raised, it will be available via the `Result.exception` property. This can be disabled by passing `catch_exceptions=False` to the `CliRunner.invoke()` method.
+
+### raise_exception.py
+
+<!--[[[cog
+cog.out("\n```python\n")
+with open("tests/raise_exception.py", "r") as f:
+    cog.out(f.read())
+cog.out("```\n")
+]]]-->
+
+```python
+"""Simple script that raises an exception"""
+
+
+def raise_exception():
+    """Raises a ValueError exception"""
+    raise ValueError("Exception raised")
+
+
+if __name__ == "__main__":
+    raise_exception()
+```
+<!--[[[end]]]-->
+
+### test_raise_exception.py
+
+<!--[[[cog
+cog.out("\n```python\n")
+with open("tests/test_raise_exception.py", "r") as f:
+    cog.out(f.read())
+cog.out("```\n")
+]]]-->
+
+```python
+"""Test raise_exception.py"""
+
+import pytest
+from raise_exception import raise_exception
+
+from clirunner import CliRunner
+
+
+def test_exception_caught():
+    """CliRunner normally catches exceptions"""
+    runner = CliRunner()
+    result = runner.invoke(raise_exception)
+    # exit code will not be 0 if exception is raised
+    assert result.exit_code != 0
+    assert isinstance(result.exception, ValueError)
+
+
+def test_exception_not_caught():
+    """CliRunner can be configured to not catch exceptions"""
+    runner = CliRunner()
+    with pytest.raises(ValueError):
+        runner.invoke(raise_exception, catch_exceptions=False)
+```
+<!--[[[end]]]-->
+
 ## Testing Click Applications
 
 Do not use `clirunner.CliRunner` to test applications built with [Click](https://pypi.org/project/click/), [Typer](https://pypi.org/project/typer/), or another Click derivative. Instead, use Click's built-in [CliRunner](https://click.palletsprojects.com/en/8.1.x/testing). `clirunner.CliRunner` is only for testing non-Click scripts such as those using [argparse](https://docs.python.org/3/library/argparse.html) or manual [sys.argv](https://docs.python.org/3/library/sys.html#sys.argv) argument parsing.
