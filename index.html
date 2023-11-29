@@ -266,6 +266,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#supported-platforms" class="md-nav__link">
+    <span class="md-ellipsis">
+      Supported Platforms
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#basic-testing" class="md-nav__link">
     <span class="md-ellipsis">
       Basic Testing
@@ -354,6 +363,72 @@
   <a href="#test_promptpy" class="md-nav__link">
     <span class="md-ellipsis">
       test_prompt.py
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#environment-variable-isolation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Environment Variable Isolation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Environment Variable Isolation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hello_envpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      hello_env.py
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test_hello_envpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      test_hello_env.py
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#handling-exceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Handling Exceptions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Handling Exceptions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#raise_exceptionpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      raise_exception.py
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test_raise_exceptionpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      test_raise_exception.py
     </span>
   </a>
   
@@ -464,6 +539,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#supported-platforms" class="md-nav__link">
+    <span class="md-ellipsis">
+      Supported Platforms
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#basic-testing" class="md-nav__link">
     <span class="md-ellipsis">
       Basic Testing
@@ -563,6 +647,72 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#environment-variable-isolation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Environment Variable Isolation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Environment Variable Isolation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hello_envpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      hello_env.py
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test_hello_envpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      test_hello_env.py
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#handling-exceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Handling Exceptions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Handling Exceptions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#raise_exceptionpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      raise_exception.py
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test_raise_exceptionpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      test_raise_exception.py
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#testing-click-applications" class="md-nav__link">
     <span class="md-ellipsis">
       Testing Click Applications
@@ -603,6 +753,8 @@
 <p>The source code is available on <a href="https://github.com/RhetTbull/clirunner">GitHub</a>.</p>
 <h2 id="motivation">Motivation</h2>
 <p>I write a lot of Python command line tools. I usually reach for Click to build the CLI but sometimes will use argparse or even just manual <code>sys.argv</code> parsing for simple scripts or where I do not want to introduce a dependency on Click. Click provides a very useful <a href="https://click.palletsprojects.com/en/8.1.x/testing/">CliRunner</a> for testing CLIs, but it only works with Click applications. This project is a derivative of Click's CliRunner that works with non-Click scripts. The API is the same as Click's CliRunner, so it should be easy to switch between the two if you later refactor to use Click.</p>
+<h2 id="supported-platforms">Supported Platforms</h2>
+<p>Tested on macOS, Ubuntu Linux, and Windows using "*-latest" GitHub Workflow runners with Python 3.9 - 3.12.</p>
 <h2 id="basic-testing">Basic Testing</h2>
 <p>CliRunner can invoke your CLI's main function as a command line script. The CliRunner.invoke() method runs the command line script in isolation and captures the output as both bytes and binary data.</p>
 <p>The return value is a Result object, which has the captured output data, exit code, and optional exception attached:</p>
@@ -765,6 +917,122 @@ def test_prompts():
 <!--[[[end]]]-->
 
 <p>Note that the input will not be echoed to the output stream. This is different from the behavior of the <code>input()</code> function, which does echo the input and from click's <code>prompt()</code> function, which also echo's the input when under test.</p>
+<h2 id="environment-variable-isolation">Environment Variable Isolation</h2>
+<p>The <code>CliRunner.invoke()</code> method can also be used to set environment variables for the command line script. This is useful for testing command line tools that use environment variables for configuration.</p>
+<h3 id="hello_envpy">hello_env.py</h3>
+<!--[[[cog
+cog.out("\n```python\n")
+with open("tests/hello_env.py", "r") as f:
+    cog.out(f.read())
+cog.out("```\n")
+]]]-->
+
+<pre><code class="language-python">&quot;&quot;&quot;Say hello to the world, shouting if desired.&quot;&quot;&quot;
+
+import os
+
+
+def hello():
+    &quot;&quot;&quot;Say hello to the world, shouting if desired.&quot;&quot;&quot;
+    if os.getenv(&quot;SHOUT&quot;) == &quot;1&quot;:
+        print(&quot;HELLO WORLD!&quot;)
+    else:
+        print(&quot;Hello World!&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    hello()
+</code></pre>
+<!--[[[end]]]-->
+
+<h3 id="test_hello_envpy">test_hello_env.py</h3>
+<!--[[[cog
+cog.out("\n```python\n")
+with open("tests/test_hello_env.py", "r") as f:
+    cog.out(f.read())
+cog.out("```\n")
+]]]-->
+
+<pre><code class="language-python">&quot;&quot;&quot;Test hello2.py showing how to set environment variables for testing.&quot;&quot;&quot;
+
+from hello_env import hello
+
+from clirunner import CliRunner
+
+
+def test_hello():
+    &quot;&quot;&quot;Test hello2.py&quot;&quot;&quot;
+    runner = CliRunner()
+    result = runner.invoke(hello)
+    assert result.exit_code == 0
+    assert result.output == &quot;Hello World!\n&quot;
+
+
+def test_hello_shouting():
+    &quot;&quot;&quot;Test hello2.py&quot;&quot;&quot;
+    runner = CliRunner()
+    result = runner.invoke(hello, env={&quot;SHOUT&quot;: &quot;1&quot;})
+    assert result.exit_code == 0
+    assert result.output == &quot;HELLO WORLD!\n&quot;
+</code></pre>
+<!--[[[end]]]-->
+
+<h2 id="handling-exceptions">Handling Exceptions</h2>
+<p>Normally the <code>CliRunner.invoke()</code> method will catch exceptions in the CLI under test. If an exception is raised, it will be available via the <code>Result.exception</code> property. This can be disabled by passing <code>catch_exceptions=False</code> to the <code>CliRunner.invoke()</code> method.</p>
+<h3 id="raise_exceptionpy">raise_exception.py</h3>
+<!--[[[cog
+cog.out("\n```python\n")
+with open("tests/raise_exception.py", "r") as f:
+    cog.out(f.read())
+cog.out("```\n")
+]]]-->
+
+<pre><code class="language-python">&quot;&quot;&quot;Simple script that raises an exception&quot;&quot;&quot;
+
+
+def raise_exception():
+    &quot;&quot;&quot;Raises a ValueError exception&quot;&quot;&quot;
+    raise ValueError(&quot;Exception raised&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    raise_exception()
+</code></pre>
+<!--[[[end]]]-->
+
+<h3 id="test_raise_exceptionpy">test_raise_exception.py</h3>
+<!--[[[cog
+cog.out("\n```python\n")
+with open("tests/test_raise_exception.py", "r") as f:
+    cog.out(f.read())
+cog.out("```\n")
+]]]-->
+
+<pre><code class="language-python">&quot;&quot;&quot;Test raise_exception.py&quot;&quot;&quot;
+
+import pytest
+from raise_exception import raise_exception
+
+from clirunner import CliRunner
+
+
+def test_exception_caught():
+    &quot;&quot;&quot;CliRunner normally catches exceptions&quot;&quot;&quot;
+    runner = CliRunner()
+    result = runner.invoke(raise_exception)
+    # exit code will not be 0 if exception is raised
+    assert result.exit_code != 0
+    assert isinstance(result.exception, ValueError)
+
+
+def test_exception_not_caught():
+    &quot;&quot;&quot;CliRunner can be configured to not catch exceptions&quot;&quot;&quot;
+    runner = CliRunner()
+    with pytest.raises(ValueError):
+        runner.invoke(raise_exception, catch_exceptions=False)
+</code></pre>
+<!--[[[end]]]-->
+
 <h2 id="testing-click-applications">Testing Click Applications</h2>
 <p>Do not use <code>clirunner.CliRunner</code> to test applications built with <a href="https://pypi.org/project/click/">Click</a>, <a href="https://pypi.org/project/typer/">Typer</a>, or another Click derivative. Instead, use Click's built-in <a href="https://click.palletsprojects.com/en/8.1.x/testing">CliRunner</a>. <code>clirunner.CliRunner</code> is only for testing non-Click scripts such as those using <a href="https://docs.python.org/3/library/argparse.html">argparse</a> or manual <a href="https://docs.python.org/3/library/sys.html#sys.argv">sys.argv</a> argument parsing.</p>
 <h2 id="license">License</h2>
