@@ -14,6 +14,10 @@ The source code is available on [GitHub](https://github.com/RhetTbull/clirunner)
 
 I write a lot of Python command line tools. I usually reach for Click to build the CLI but sometimes will use argparse or even just manual `sys.argv` parsing for simple scripts or where I do not want to introduce a dependency on Click. Click provides a very useful [CliRunner](https://click.palletsprojects.com/en/8.1.x/testing/) for testing CLIs, but it only works with Click applications. This project is a derivative of Click's CliRunner that works with non-Click scripts. The API is the same as Click's CliRunner, so it should be easy to switch between the two if you later refactor to use Click.
 
+## Supported Platforms
+
+Tested on macOS, Ubuntu Linux, and Windows using "*-latest" GitHub Workflow runners with Python 3.9 - 3.12.
+
 ## Basic Testing
 
 CliRunner can invoke your CLI's main function as a command line script. The CliRunner.invoke() method runs the command line script in isolation and captures the output as both bytes and binary data.
@@ -199,6 +203,134 @@ def test_prompts():
 <!--[[[end]]]-->
 
 Note that the input will not be echoed to the output stream. This is different from the behavior of the `input()` function, which does echo the input and from click's `prompt()` function, which also echo's the input when under test.
+
+## Environment Variable Isolation
+
+The `CliRunner.invoke()` method can also be used to set environment variables for the command line script. This is useful for testing command line tools that use environment variables for configuration.
+
+### hello_env.py
+
+<!--[[[cog
+cog.out("\n```python\n")
+with open("tests/hello_env.py", "r") as f:
+    cog.out(f.read())
+cog.out("```\n")
+]]]-->
+
+```python
+"""Say hello to the world, shouting if desired."""
+
+import os
+
+
+def hello():
+    """Say hello to the world, shouting if desired."""
+    if os.getenv("SHOUT") == "1":
+        print("HELLO WORLD!")
+    else:
+        print("Hello World!")
+
+
+if __name__ == "__main__":
+    hello()
+```
+<!--[[[end]]]-->
+
+### test_hello_env.py
+
+<!--[[[cog
+cog.out("\n```python\n")
+with open("tests/test_hello_env.py", "r") as f:
+    cog.out(f.read())
+cog.out("```\n")
+]]]-->
+
+```python
+"""Test hello2.py showing how to set environment variables for testing."""
+
+from hello_env import hello
+
+from clirunner import CliRunner
+
+
+def test_hello():
+    """Test hello2.py"""
+    runner = CliRunner()
+    result = runner.invoke(hello)
+    assert result.exit_code == 0
+    assert result.output == "Hello World!\n"
+
+
+def test_hello_shouting():
+    """Test hello2.py"""
+    runner = CliRunner()
+    result = runner.invoke(hello, env={"SHOUT": "1"})
+    assert result.exit_code == 0
+    assert result.output == "HELLO WORLD!\n"
+```
+<!--[[[end]]]-->
+
+## Handling Exceptions
+
+Normally the `CliRunner.invoke()` method will catch exceptions in the CLI under test. If an exception is raised, it will be available via the `Result.exception` property. This can be disabled by passing `catch_exceptions=False` to the `CliRunner.invoke()` method.
+
+### raise_exception.py
+
+<!--[[[cog
+cog.out("\n```python\n")
+with open("tests/raise_exception.py", "r") as f:
+    cog.out(f.read())
+cog.out("```\n")
+]]]-->
+
+```python
+"""Simple script that raises an exception"""
+
+
+def raise_exception():
+    """Raises a ValueError exception"""
+    raise ValueError("Exception raised")
+
+
+if __name__ == "__main__":
+    raise_exception()
+```
+<!--[[[end]]]-->
+
+### test_raise_exception.py
+
+<!--[[[cog
+cog.out("\n```python\n")
+with open("tests/test_raise_exception.py", "r") as f:
+    cog.out(f.read())
+cog.out("```\n")
+]]]-->
+
+```python
+"""Test raise_exception.py"""
+
+import pytest
+from raise_exception import raise_exception
+
+from clirunner import CliRunner
+
+
+def test_exception_caught():
+    """CliRunner normally catches exceptions"""
+    runner = CliRunner()
+    result = runner.invoke(raise_exception)
+    # exit code will not be 0 if exception is raised
+    assert result.exit_code != 0
+    assert isinstance(result.exception, ValueError)
+
+
+def test_exception_not_caught():
+    """CliRunner can be configured to not catch exceptions"""
+    runner = CliRunner()
+    with pytest.raises(ValueError):
+        runner.invoke(raise_exception, catch_exceptions=False)
+```
+<!--[[[end]]]-->
 
 ## Testing Click Applications
 
