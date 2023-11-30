@@ -165,6 +165,26 @@ def test_env():
     assert os.environ == env_orig
 
 
+def test_env_clirunner():
+    """Test that env can be set in CliRunner __init__"""
+
+    def cli_env():
+        print(f"ENV={os.environ['TEST_CLICK_ENV']}")
+
+    env_orig = dict(os.environ)
+    env = dict(env_orig)
+    assert "TEST_CLICK_ENV" not in env
+    env["TEST_CLICK_ENV"] = "some_value"
+
+    runner = CliRunner(env=env)
+
+    result = runner.invoke(cli_env)
+    assert result.exit_code == 0
+    assert result.output == "ENV=some_value\n"
+
+    assert os.environ == env_orig
+
+
 def test_output():
     def cli_output():
         print("stdout")
