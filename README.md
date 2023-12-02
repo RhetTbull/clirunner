@@ -342,4 +342,4 @@ Do not use `clirunner.CliRunner` to test applications built with [Click](https:/
 
 ## License
 
-CliRunner is a derivative work of Click's CliRunner, and so it is licensed under the same BSD 3-clause license as Click. See the [LICENSE](https://github.com/RhetTbull/clirunner/blob/main/LICENSE) file for details.
+CliRunner is a derivative work of Click's CliRunner, and so it is licensed under the same BSD 3-clause license as Click. See the [LICENSE](https://github.com/RhetTbull/clirunner/blob/main/LICENSE) and [LICENSE_CLICK](https://github.com/RhetTbull/clirunner/blob/main/LICENSE_CLICK) files for details.
