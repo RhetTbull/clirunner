@@ -275,6 +275,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Documentation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#basic-testing" class="md-nav__link">
     <span class="md-ellipsis">
       Basic Testing
@@ -548,6 +557,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Documentation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#basic-testing" class="md-nav__link">
     <span class="md-ellipsis">
       Basic Testing
@@ -755,6 +773,8 @@
 <p>I write a lot of Python command line tools. I usually reach for Click to build the CLI but sometimes will use argparse or even just manual <code>sys.argv</code> parsing for simple scripts or where I do not want to introduce a dependency on Click. Click provides a very useful <a href="https://click.palletsprojects.com/en/8.1.x/testing/">CliRunner</a> for testing CLIs, but it only works with Click applications. This project is a derivative of Click's CliRunner that works with non-Click scripts. The API is the same as Click's CliRunner, so it should be easy to switch between the two if you later refactor to use Click.</p>
 <h2 id="supported-platforms">Supported Platforms</h2>
 <p>Tested on macOS, Ubuntu Linux, and Windows using "*-latest" GitHub Workflow runners with Python 3.9 - 3.12.</p>
+<h2 id="documentation">Documentation</h2>
+<p>Full documentation is available <a href="https://rhettbull.github.io/clirunner/">here</a>.</p>
 <h2 id="basic-testing">Basic Testing</h2>
 <p>CliRunner can invoke your CLI's main function as a command line script. The CliRunner.invoke() method runs the command line script in isolation and captures the output as both bytes and binary data.</p>
 <p>The return value is a Result object, which has the captured output data, exit code, and optional exception attached:</p>
@@ -1036,7 +1056,7 @@ def test_exception_not_caught():
 <h2 id="testing-click-applications">Testing Click Applications</h2>
 <p>Do not use <code>clirunner.CliRunner</code> to test applications built with <a href="https://pypi.org/project/click/">Click</a>, <a href="https://pypi.org/project/typer/">Typer</a>, or another Click derivative. Instead, use Click's built-in <a href="https://click.palletsprojects.com/en/8.1.x/testing">CliRunner</a>. <code>clirunner.CliRunner</code> is only for testing non-Click scripts such as those using <a href="https://docs.python.org/3/library/argparse.html">argparse</a> or manual <a href="https://docs.python.org/3/library/sys.html#sys.argv">sys.argv</a> argument parsing.</p>
 <h2 id="license">License</h2>
-<p>CliRunner is a derivative work of Click's CliRunner, and so it is licensed under the same BSD 3-clause license as Click. See the <a href="https://github.com/RhetTbull/clirunner/blob/main/LICENSE">LICENSE</a> file for details.</p>
+<p>CliRunner is a derivative work of Click's CliRunner, and so it is licensed under the same BSD 3-clause license as Click. See the <a href="https://github.com/RhetTbull/clirunner/blob/main/LICENSE">LICENSE</a> and <a href="https://github.com/RhetTbull/clirunner/blob/main/LICENSE_CLICK">LICENSE_CLICK</a> files for details.</p>
 
 
 
