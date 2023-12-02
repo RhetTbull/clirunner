@@ -39,6 +39,7 @@ def task_build():
             "clirunner/_winconsole.py",
             "clirunner/testing.py",
             "clirunner/utils.py",
+            "clirunner/_version.py",
             "pyproject.toml",
         ],
     }
