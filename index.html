@@ -1054,9 +1054,10 @@ def test_exception_not_caught():
 <!--[[[end]]]-->
 
 <h2 id="testing-click-applications">Testing Click Applications</h2>
-<p>Do not use <code>clirunner.CliRunner</code> to test applications built with <a href="https://pypi.org/project/click/">Click</a>, <a href="https://pypi.org/project/typer/">Typer</a>, or another Click derivative. Instead, use Click's built-in <a href="https://click.palletsprojects.com/en/8.1.x/testing">CliRunner</a>. <code>clirunner.CliRunner</code> is only for testing non-Click scripts such as those using <a href="https://docs.python.org/3/library/argparse.html">argparse</a> or manual <a href="https://docs.python.org/3/library/sys.html#sys.argv">sys.argv</a> argument parsing.</p>
+<p>Do not use <code>clirunner.CliRunner</code> to test applications built with <a href="https://pypi.org/project/click/">Click</a>, <a href="https://pypi.org/project/typer/">Typer</a>, or another Click derivative. Instead, use Click's built-in <a href="https://click.palletsprojects.com/en/8.1.x/testing">CliRunner</a> or <a href="https://typer.tiangolo.com/tutorial/testing/">Typer's equivalent</a>.</p>
+<p><code>clirunner.CliRunner</code> is designed for testing non-Click scripts such as those using <a href="https://docs.python.org/3/library/argparse.html">argparse</a> or manual <a href="https://docs.python.org/3/library/sys.html#sys.argv">sys.argv</a> argument parsing. It has also been tested with <a href="https://pydantic-argparse.supimdos.com/">pydantic-argparse</a>, <a href="https://github.com/sander76/clipstick">clipstick</a>, and <a href="https://github.com/brentyi/tyro">tyro</a>.</p>
 <h2 id="license">License</h2>
-<p>CliRunner is a derivative work of Click's CliRunner, and so it is licensed under the same BSD 3-clause license as Click. See the <a href="https://github.com/RhetTbull/clirunner/blob/main/LICENSE">LICENSE</a> and <a href="https://github.com/RhetTbull/clirunner/blob/main/LICENSE_CLICK">LICENSE_CLICK</a> files for details.</p>
+<p>CliRunner is a derivative work of Click's CliRunner, and so it is licensed under the same BSD 3-clause license as Click. See the <a href="https://github.com/RhetTbull/clirunner/blob/main/LICENSE">LICENSE</a> and <a href="https://github.com/RhetTbull/clirunner/blob/main/LICENSE.Click">LICENSE.Click</a> files for details.</p>
 
 
 
