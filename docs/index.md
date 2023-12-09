@@ -338,8 +338,10 @@ def test_exception_not_caught():
 
 ## Testing Click Applications
 
-Do not use `clirunner.CliRunner` to test applications built with [Click](https://pypi.org/project/click/), [Typer](https://pypi.org/project/typer/), or another Click derivative. Instead, use Click's built-in [CliRunner](https://click.palletsprojects.com/en/8.1.x/testing). `clirunner.CliRunner` is only for testing non-Click scripts such as those using [argparse](https://docs.python.org/3/library/argparse.html) or manual [sys.argv](https://docs.python.org/3/library/sys.html#sys.argv) argument parsing.
+Do not use `clirunner.CliRunner` to test applications built with [Click](https://pypi.org/project/click/), [Typer](https://pypi.org/project/typer/), or another Click derivative. Instead, use Click's built-in [CliRunner](https://click.palletsprojects.com/en/8.1.x/testing) or [Typer's equivalent](https://typer.tiangolo.com/tutorial/testing/).
+
+`clirunner.CliRunner` is designed for testing non-Click scripts such as those using [argparse](https://docs.python.org/3/library/argparse.html) or manual [sys.argv](https://docs.python.org/3/library/sys.html#sys.argv) argument parsing. It has also been tested with [pydantic-argparse](https://pydantic-argparse.supimdos.com/), [clipstick](https://github.com/sander76/clipstick), and [tyro](https://github.com/brentyi/tyro).
 
 ## License
 
-CliRunner is a derivative work of Click's CliRunner, and so it is licensed under the same BSD 3-clause license as Click. See the [LICENSE](https://github.com/RhetTbull/clirunner/blob/main/LICENSE) and [LICENSE_CLICK](https://github.com/RhetTbull/clirunner/blob/main/LICENSE_CLICK) files for details.
+CliRunner is a derivative work of Click's CliRunner, and so it is licensed under the same BSD 3-clause license as Click. See the [LICENSE](https://github.com/RhetTbull/clirunner/blob/main/LICENSE) and [LICENSE.Click](https://github.com/RhetTbull/clirunner/blob/main/LICENSE.Click) files for details.
