@@ -1,10 +1,15 @@
 """Test clirunner with tyro"""
 
+import sys
 from dataclasses import dataclass
 
 import instld
+import pytest
 
 from clirunner import CliRunner
+
+if sys.platform == "win32":
+    pytest.skip(reason="instld does not run on windows CI", allow_module_level=True)
 
 
 def test_cli_function():

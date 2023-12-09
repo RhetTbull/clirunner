@@ -215,7 +215,12 @@ class CliRunner:
 
     def get_default_prog_name(self, cli: t.Callable[..., t.Any]) -> str:
         """Given a callable return the default program name for it."""
-        return cli.__name__ or "main"
+        try:
+            return cli.__name__ or "main"
+        except AttributeError:
+            # if used with a CLI framework that creates objects like Click
+            # there is no __name__ attribute
+            return "main"
 
     def make_env(
         self, overrides: cabc.Mapping[str, str | None] | None = None

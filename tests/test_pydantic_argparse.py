@@ -1,8 +1,14 @@
 """Test clirunner with pydantic-argparse"""
 
+import sys
+
 import instld
+import pytest
 
 from clirunner import CliRunner
+
+if sys.platform == "win32":
+    pytest.skip(reason="instld does not run on windows CI", allow_module_level=True)
 
 
 def test_pydantic_argparse():

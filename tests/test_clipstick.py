@@ -1,4 +1,4 @@
-"""Test clirunner with clipstick"""
+"""Test clirunner with clipstick; you must install clipstick to run this test."""
 
 import pytest
 
