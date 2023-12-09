@@ -1,4 +1,4 @@
-"""Test clirunner with Click; this is just to show that it works, you should click.testing.CliRunner if using Click """
+"""Test clirunner with Click; this is just to show that it works, you should use click.testing.CliRunner if using Click """
 
 import sys
 
