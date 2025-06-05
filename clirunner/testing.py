@@ -135,8 +135,9 @@ class Result:
         return_value: t.Any,
         exit_code: int,
         exception: BaseException | None,
-        exc_info: tuple[type[BaseException], BaseException, TracebackType]
-        | None = None,
+        exc_info: (
+            tuple[type[BaseException], BaseException, TracebackType] | None
+        ) = None,
     ):
         #: The runner that created the result
         self.runner = runner
@@ -371,6 +372,9 @@ class CliRunner:
             sys.argv = [prog_name, *call_args]
             try:
                 return_value = cli()
+                # If the command returns an integer, treat it as an exit code
+                if isinstance(return_value, int) and return_value != 0:
+                    raise SystemExit(return_value)
             except SystemExit as e:
                 exc_info = sys.exc_info()
                 e_code = t.cast("int | t.Any | None", e.code)
