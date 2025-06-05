@@ -22,7 +22,7 @@ def cmd_remove(args):
     return 0
 
 
-def main():
+def subparser():
     """Main CLI entry point."""
     parser = argparse.ArgumentParser(description="Service management CLI")
     subparsers = parser.add_subparsers(dest="command", help="Available commands")
@@ -53,4 +53,4 @@ def main():
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    sys.exit(subparser())
