@@ -36,7 +36,7 @@ def test_cli_function():
 
 
 def test_cli_dataclass():
-    with instld("tyro==0.6.0") as context:
+    with instld("tyro>=0.6.0") as context:
         tyro = context.import_here("tyro")
 
         def cli_dataclass():
