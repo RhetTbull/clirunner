@@ -21,3 +21,4 @@ cov.xml
 .doit.db.db
 site/.envrc
 .envrc
+site/
